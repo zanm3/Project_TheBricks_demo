@@ -23,37 +23,13 @@ function drawIt() {
     init();
 }
 
-var paddlex;
-var paddleh;
-var paddlew;
+// visuals
 
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const chestImg = new Image();
+chestImg.src = "img/treasure_chest.png";
 
-function init_paddle() {
-  paddlex = WIDTH / 2;
-  paddleh = 10;
-  paddlew = 75;
+chestImg.onload = function (){
+    ctx.drawImage(chestImg, 150, 150, 100, 100);
 }
-
-function drawPaddle() {
-  clear();
-  circle(x, y, 10);
-  rect(paddlex, HEIGHT-paddleh, paddlew, paddleh);
-
-  if (x + dx > WIDTH-r || x + dx < 0+r)
-    dx = -dx;
-
-  if (y + dy < 0+r)
-    dy = -dy;
-  else if (y + dy > HEIGHT-r) {
-    if (x > paddlex && x < paddlex + paddlew)
-      dy = -dy;
-    else
-      clearInterval(intervalId);
-  }
-
-  x += dx;
-  y += dy;
-}
-window.onload = init_paddle();
-
-window.onload = drawPaddle();
