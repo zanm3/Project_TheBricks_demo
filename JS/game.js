@@ -37,7 +37,7 @@ function drawIt() {
         // risanje
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
-        ctx.arc(x, y, 10, 0, Math.PI * 2, true);
+        ctx.arc(x, y, 7, 0, Math.PI * 2, true);
         init_paddle();
         ctx.rect(paddlex, canvas.height - paddleh, paddlew, paddleh);
         ctx.closePath();
@@ -48,7 +48,7 @@ function drawIt() {
         else if (leftDown) 
             paddlex -= 5;
 
-        if (x + dx > canvas.width - 10 || x + dx < 0 + 10)
+        if (x + dx > canvas.width - 7 || x + dx < 0 + 7)
             dx = -dx;
         if (y + dy > canvas.height || y + dy < 0)
             dy = -dy;
