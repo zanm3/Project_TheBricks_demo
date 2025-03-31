@@ -1,10 +1,10 @@
 function drawIt() {
-    var x = 150;
-    var y = 150;
-    var dx = 2;
-    var dy = 4;
-    var ctx;
-    var canvas
+    let x = 150;
+    let y = 150;
+    let dx = 2;
+    let dy = 4;
+    let ctx;
+    let canvas;
     function init() {
 
         canvas = document.getElementById('canvas');
@@ -17,19 +17,19 @@ function drawIt() {
         ctx.arc(x, y, 10, 0, Math.PI * 2, true);
         ctx.closePath();
         ctx.fill();
+
+        if (x + dx > canvas.width - 10 || x + dx < 0 + 10)
+            dx = -dx;
+        if (y + dy > canvas.height || y + dy < 0)
+            dy = -dy;
+
         x += dx;
         y += dy;
+
+        let paddlex;
+        let paddleh;
+        let paddlew;
+        ctx.rect(paddlex, canvas.height - paddleh, paddlew, paddleh);
     }
     init();
-}
-
-// visuals
-
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-const chestImg = new Image();
-chestImg.src = "img/treasure_chest.png";
-
-chestImg.onload = function (){
-    ctx.drawImage(chestImg, 150, 150, 100, 100);
 }
