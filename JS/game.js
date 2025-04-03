@@ -8,30 +8,27 @@ function drawIt() {
     let rightDown = false;
     let leftDown = false;
 
-    //nastavljanje leve in desne tipke
-    function onKeyDown(evt) {
-        if (evt.keyCode == 39)
-            rightDown = true;
-        else if (evt.keyCode == 37)
-            leftDown = true;
-    }
-
-    function onKeyUp(evt) {
-        if (evt.keyCode == 39)
-            rightDown = false;
-        else if (evt.keyCode == 37)
-            leftDown = false;
-    }
-
     function init() {
         canvas = document.getElementById('canvas');
         ctx = canvas.getContext('2d');
+        init_paddle();
         return setInterval(draw, 10); //klic funkcije draw vsakih 10 ms; http://www.w3schools.com/jsref/met_win_setinterval.asp
     }
     function init_paddle() {
         paddlex = canvas.width / 2;
         paddleh = 10;
         paddlew = 75;
+    }
+    function onKeyDown(evt) {
+        if (evt.keyCode == 39)
+            rightDown = true;
+        else if (evt.keyCode == 37) leftDown = true;
+    }
+
+    function onKeyUp(evt) {
+        if (evt.keyCode == 39)
+            rightDown = false;
+        else if (evt.keyCode == 37) leftDown = false;
     }
 
     $(document).keydown(onKeyDown);
@@ -42,7 +39,6 @@ function drawIt() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
         ctx.arc(x, y, 7, 0, Math.PI * 2, true);
-        init_paddle();
         ctx.rect(paddlex, canvas.height - paddleh, paddlew, paddleh);
         ctx.closePath();
         ctx.fill();
@@ -50,29 +46,20 @@ function drawIt() {
         if (rightDown) paddlex += 5;
         else if (leftDown) paddlex -= 5;
 
-        ctx.rect(paddlex, canvas.height - paddleh, paddlew, paddleh);
-
-        if (x + dx > canvas.width - 7 || x + dx < 7)
+        if (x + dx > canvas.width - 6 || x + dx < 0 + 6)
             dx = -dx;
-        if (y + dy < 7)
+
+        if (y + dy > canvas.height || y + dy < 0)
             dy = -dy;
-
-        else if (y + dy > canvas.height - 7){
-            if (x > paddlex && x < paddlex + paddlew)
+        else if (y + dy > canvas.height - 6) {
+            if (x > paddlex && x < paddlex + paddlew) {
                 dy = -dy;
-
-            else if (y + dy > canvas.height-7)
-                clearInterval(intervalId);
-
-            if (x + dx > canvas.width - 7 || x + dx < 0 + 7)
-                dx = -dx;
-
-            if (y + dy > canvas.height || y + dy < 0)
-                dy = -dy;
-
-            x += dx;
-            y += dy;
+            } else {
+                clearInterval(intervalId); // Game over
+            }
         }
-        init();
+        x += dx;
+        y += dy;
     }
+    const intervalId = init();
 }
