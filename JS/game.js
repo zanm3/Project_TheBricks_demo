@@ -12,14 +12,14 @@ function drawIt() {
     function onKeyDown(evt) {
         if (evt.keyCode == 39)
             rightDown = true;
-        else if (evt.keyCode == 37) 
+        else if (evt.keyCode == 37)
             leftDown = true;
     }
 
     function onKeyUp(evt) {
         if (evt.keyCode == 39)
             rightDown = false;
-        else if (evt.keyCode == 37) 
+        else if (evt.keyCode == 37)
             leftDown = false;
     }
 
@@ -33,6 +33,10 @@ function drawIt() {
         paddleh = 10;
         paddlew = 75;
     }
+
+    $(document).keydown(onKeyDown);
+    $(document).keyup(onKeyUp);
+
     function draw() {
         // risanje
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -42,19 +46,33 @@ function drawIt() {
         ctx.rect(paddlex, canvas.height - paddleh, paddlew, paddleh);
         ctx.closePath();
         ctx.fill();
-        
-        if (rightDown) 
-            paddlex += 5;
-        else if (leftDown) 
-            paddlex -= 5;
 
-        if (x + dx > canvas.width - 7 || x + dx < 0 + 7)
+        if (rightDown) paddlex += 5;
+        else if (leftDown) paddlex -= 5;
+
+        ctx.rect(paddlex, canvas.height - paddleh, paddlew, paddleh);
+
+        if (x + dx > canvas.width - 7 || x + dx < 7)
             dx = -dx;
-        if (y + dy > canvas.height || y + dy < 0)
+        if (y + dy < 7)
             dy = -dy;
 
-        x += dx;
-        y += dy;
+        else if (y + dy > canvas.height - 7){
+            if (x > paddlex && x < paddlex + paddlew)
+                dy = -dy;
+
+            else if (y + dy > canvas.height-7)
+                clearInterval(intervalId);
+
+            if (x + dx > canvas.width - 7 || x + dx < 0 + 7)
+                dx = -dx;
+
+            if (y + dy > canvas.height || y + dy < 0)
+                dy = -dy;
+
+            x += dx;
+            y += dy;
+        }
+        init();
     }
-    init();
 }
