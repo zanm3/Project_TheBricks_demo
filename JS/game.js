@@ -1,3 +1,26 @@
+let bricks;
+let NROWS;
+let NCOLS;
+let BRICKWIDTH;
+let BRICKHEIGHT;
+let PADDING;
+
+function initbricks() { //inicializacija opek - polnjenje v tabelo
+  NROWS = 5;
+  NCOLS = 5;
+  BRICKWIDTH = (canvas.width/NCOLS) - 1;
+  BRICKHEIGHT = 15;
+  PADDING = 1;
+  bricks = new Array(NROWS);
+  for (i=0; i < NROWS; i++) {
+    bricks[i] = new Array(NCOLS);
+    for (j=0; j < NCOLS; j++) {
+      bricks[i][j] = 1;
+    }
+  }
+}
+
+
 function drawIt() {
     let x = 150;
     let y = 150;
@@ -12,6 +35,7 @@ function drawIt() {
         canvas = document.getElementById('canvas');
         ctx = canvas.getContext('2d');
         init_paddle();
+        initbricks();
         return setInterval(draw, 10); //klic funkcije draw vsakih 10 ms; http://www.w3schools.com/jsref/met_win_setinterval.asp
     }
     function init_paddle() {
