@@ -1,3 +1,12 @@
+let x = 150;
+let y = 150;
+let dx = 2;
+let dy = 4;
+let ctx;
+let canvas;
+let rightDown = false;
+let leftDown = false;
+
 let bricks = {};
 let nrows = 5;
 let ncols = 9;
@@ -15,15 +24,6 @@ function initbricks() { //inicializacija opek - polnjenje v tabelož
     }
 }
 function drawIt() {
-    let x = 150;
-    let y = 150;
-    let dx = 2;
-    let dy = 4;
-    let ctx;
-    let canvas;
-    let rightDown = false;
-    let leftDown = false;
-
     function init() {
         canvas = document.getElementById('canvas');
         ctx = canvas.getContext('2d');
