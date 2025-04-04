@@ -1,5 +1,5 @@
-let x = 150;
-let y = 150;
+let x = 500;
+let y = 500;
 let dx = 2;
 let dy = 4;
 let ctx;
@@ -9,10 +9,14 @@ let leftDown = false;
 
 let bricks = {};
 let nrows = 5;
-let ncols = 9;
-let brickwidth = 110;
-let brickheight = 20;
-let padding = 1;
+let ncols = 22;
+let brickwidth = 45;
+let brickheight = 45;
+let padding = 10;
+
+// visuals
+let skrinja = new Image();
+skrinja.src = "../img/treasure_chest.png";
 
 function initbricks() { //inicializacija opek - polnjenje v tabelož
     bricks = new Array(nrows);
@@ -67,11 +71,21 @@ function drawIt() {
         for (i = 0; i < nrows; i++) {
             for (j = 0; j < ncols; j++) {
                 if (bricks[i][j] == 1) {
-                    ctx.fillRect((j * (brickwidth + padding)) + padding,
+                    ctx.drawImage(skrinja, (j * (brickwidth + padding)) + padding,
                         (i * (brickheight + padding)) + padding,
                         brickwidth, brickheight);
                 }
             }
+        }
+
+        rowheight = brickheight + padding; //Smo zadeli opeko?
+        colwidth = brickwidth + padding;
+        row = Math.floor(y / rowheight);
+        col = Math.floor(x / colwidth);
+
+        //Če smo zadeli opeko, vrni povratno kroglo in označi v tabeli, da opeke ni več
+        if (y < nrows * rowheight && row >= 0 && col >= 0 && bricks[row][col] == 1) {
+            dy = -dy; bricks[row][col] = 0;
         }
 
         if (x + dx > canvas.width - 6 || x + dx < 0 + 6)
