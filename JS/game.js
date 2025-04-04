@@ -16,7 +16,7 @@ let padding = 10;
 
 // visuals
 let skrinja = new Image();
-skrinja.src = "../img/treasure_chest.png";
+skrinja.src = "img/treasure_chest.png";
 
 function initbricks() { //inicializacija opek - polnjenje v tabelož
     bricks = new Array(nrows);
