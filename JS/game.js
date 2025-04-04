@@ -1,26 +1,19 @@
-let bricks;
-let NROWS;
-let NCOLS;
-let BRICKWIDTH;
-let BRICKHEIGHT;
-let PADDING;
+let bricks = {};
+let nrows = 5;
+let ncols = 9;
+let brickwidth = 110;
+let brickheight = 20;
+let padding = 1;
 
-function initbricks() { //inicializacija opek - polnjenje v tabelo
-  NROWS = 5;
-  NCOLS = 5;
-  BRICKWIDTH = (canvas.width/NCOLS) - 1;
-  BRICKHEIGHT = 15;
-  PADDING = 1;
-  bricks = new Array(NROWS);
-  for (i=0; i < NROWS; i++) {
-    bricks[i] = new Array(NCOLS);
-    for (j=0; j < NCOLS; j++) {
-      bricks[i][j] = 1;
+function initbricks() { //inicializacija opek - polnjenje v tabelož
+    bricks = new Array(nrows);
+    for (i = 0; i < nrows; i++) {
+        bricks[i] = new Array(nrows);
+        for (j = 0; j < ncols; j++) {
+            bricks[i][j] = 1;
+        }
     }
-  }
 }
-
-
 function drawIt() {
     let x = 150;
     let y = 150;
@@ -62,13 +55,24 @@ function drawIt() {
         // risanje
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
-        ctx.arc(x, y, 7, 0, Math.PI * 2, true);
-        ctx.rect(paddlex, canvas.height - paddleh, paddlew, paddleh);
+        ctx.arc(x, y, 7, 0, Math.PI * 2, true)
         ctx.closePath();
         ctx.fill();
 
         if (rightDown) paddlex += 5;
         else if (leftDown) paddlex -= 5;
+
+        ctx.fillRect(paddlex, canvas.height - paddleh, paddlew, paddleh);
+
+        for (i = 0; i < nrows; i++) {
+            for (j = 0; j < ncols; j++) {
+                if (bricks[i][j] == 1) {
+                    ctx.fillRect((j * (brickwidth + padding)) + padding,
+                        (i * (brickheight + padding)) + padding,
+                        brickwidth, brickheight);
+                }
+            }
+        }
 
         if (x + dx > canvas.width - 6 || x + dx < 0 + 6)
             dx = -dx;
@@ -79,7 +83,7 @@ function drawIt() {
             if (x > paddlex && x < paddlex + paddlew) {
                 dy = -dy;
             } else {
-                clearInterval(intervalId); // Game over
+                clearInterval(intervalId);
             }
         }
         x += dx;
